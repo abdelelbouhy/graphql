@@ -2,8 +2,6 @@ import {GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList}
 import Book from '../models/book';
 import Author from '../models/author';
 
-
-
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields: () => ({
@@ -41,7 +39,7 @@ const RootQuery =  new GraphQLObjectType({
             type: BookType,
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
-                // return _.find(books, {id: args.id});
+                return Book.findById({_id: args.id});
             }
         },
 
@@ -81,7 +79,7 @@ const Mutation = new GraphQLObjectType({
                 authorId: {type: GraphQLString}
             },
             resolve(parent, args) {
-                const book = new Author({
+                const book = new Book({
                     name: args.name,
                     genre: args.genre,
                     authorId: args.authorId
